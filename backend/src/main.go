@@ -16,7 +16,7 @@ func main() {
         fmt.Println("GOPATH NOT SET")
         return
     }
-    filepath := fmt.Sprintf("%s/src/frontend/", path)
+    filepath := fmt.Sprintf("%s/../frontend/", path)
     web.Config.StaticDir = filepath
 
     // Setup the DB

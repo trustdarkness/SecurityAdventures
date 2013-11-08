@@ -7,21 +7,23 @@ import (
     "fmt"
 )
 
+var successResponse = "{ \"msg\": \"success\" }"
 var errResponse = "{ \"msg\": \"have you ever danced with the devil in the pale moonlight?\" }"
 
+// GET REQUESTS -----------------------------------------------------------------------------------
 func getScoreboard() string {
     scoreBoard := domains.Scoreboard{}
 
     users, err := db.GetUsers()
     if err != nil {
-        return constructResponse("scoreboard", scoreBoard, err)
+        return constructGetResponse("scoreboard", scoreBoard, err)
     }
 
     for _, user := range users {
 
         flags, err := db.GetFlagsForUser(user.PublicId)
         if err != nil {
-            return constructResponse("scoreboard", scoreBoard, err)
+            return constructGetResponse("scoreboard", scoreBoard, err)
         }
         flagInfo := domains.UsersFlagInfo{}
         flagInfo.User = user
@@ -29,24 +31,15 @@ func getScoreboard() string {
         scoreBoard.Scores = append(scoreBoard.Scores, flagInfo)
     }
 
-    return constructResponse("scoreboard", scoreBoard, nil)
-}
-
-func publishFlag() string {
-    return constructResponse("", nil, nil)
+    return constructGetResponse("scoreboard", scoreBoard, nil)
 }
 
 func getUsers() string {
     users, err := db.GetUsers()
-    return constructResponse("users", users, err)
+    return constructGetResponse("users", users, err)
 }
 
-// To be implemented ?
-func newUser() string {
-    return constructResponse("", nil, nil)
-}
-
-func constructResponse(key string, out interface{}, err error) string {
+func constructGetResponse(key string, out interface{}, err error) string {
     if err != nil {
         fmt.Println(err)
         return errResponse
@@ -61,4 +54,25 @@ func constructResponse(key string, out interface{}, err error) string {
         return errResponse
     }
     return fmt.Sprintf("{ \"%s\": %s }", key, string(b))
+}
+
+// POST/PUT REQUESTS -----------------------------------------------------------------------------------
+// These requests only request a success / failure repsonse
+func validateFlag() string {
+
+    return constructStandardResponse(nil)
+}
+
+// To be implemented ?
+func newUser() string {
+    return constructStandardResponse(nil)
+}
+
+func constructStandardResponse(err error) string {
+
+    if err != nil {
+        return errResponse
+    }
+
+    return successResponse
 }

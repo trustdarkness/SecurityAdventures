@@ -9,7 +9,7 @@ func Routes() {
     // "Brain" stuff
     web.Get("/scoreboard", getScoreboard)
     web.Get("/users", getUsers)
-    web.Put("/publishFlag", publishFlag)
+    web.Put("/validateFlag", validateFlag)
 
     // To be implemented ?
     web.Post("/newuser", newUser)

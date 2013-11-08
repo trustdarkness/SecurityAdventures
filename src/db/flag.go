@@ -3,7 +3,6 @@ package db
 import (
     "database/sql"
     "domains"
-    "fmt"
 )
 
 func GetFlagsForUser(uId int) ([]domains.Flag, error) {
@@ -19,7 +18,6 @@ func GetFlagsForUser(uId int) ([]domains.Flag, error) {
         flag := result.(domains.Flag)
         flags = append(flags, flag)
     }
-    fmt.Println(flags)
 
     return flags, err
 }

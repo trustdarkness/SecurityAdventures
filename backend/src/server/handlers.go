@@ -2,6 +2,7 @@ package serve
 
 import (
     "bytes"
+    l4g "code.google.com/p/log4go"
     "db"
     "domains"
     "encoding/json"
@@ -80,8 +81,10 @@ func newUser(b []byte) string {
 // RESPONSES CONSTRUCTION ------------------------------------------------------------------------------
 
 func constructGetResponse(key string, out interface{}, err error) string {
+
     if err != nil {
-        fmt.Println(err)
+        // logging errors
+        l4g.Error(err)
         return errResponse
     }
 
@@ -100,7 +103,8 @@ func constructGetResponse(key string, out interface{}, err error) string {
 func constructStandardResponse(message string, err error) string {
 
     if err != nil {
-        fmt.Println(err)
+        // logging errors
+        l4g.Error(err)
         return errResponse
     }
 

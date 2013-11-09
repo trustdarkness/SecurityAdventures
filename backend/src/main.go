@@ -1,6 +1,7 @@
 package main
 
 import (
+    l4g "code.google.com/p/log4go"
     "db"
     "flag"
     "fmt"
@@ -22,6 +23,13 @@ func main() {
 
     // Setup the DB
     db.Init()
+
+    // Setup logging
+    log := make(l4g.Logger)
+
+    // Create a default logger that is logging messages of FINE or higher
+    l4g.AddFilter("file", l4g.FINE, l4g.NewFileLogWriter("error_log.log", false))
+    log.Close()
 
     // Parse command line arguments
     port := flag.Int("port", 80, "port number to start the server on")

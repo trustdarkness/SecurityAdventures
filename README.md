@@ -7,6 +7,7 @@
 + [Go](http://golang.org/)
   * [Go-MySQL-Driver](http://godoc.org/github.com/go-sql-driver/mysql)
   * [web.go](http://webgo.io/)
+  * [log4go](http://code.google.com/p/log4go)
 
 ##Setup:
 + Frontend

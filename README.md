@@ -9,6 +9,7 @@
   * [Go-MySQL-Driver](http://godoc.org/github.com/go-sql-driver/mysql)
   * [web.go](http://webgo.io/)
   * [log4go](http://code.google.com/p/log4go)
++ MySQL
 
 ##Setup
 + Frontend
@@ -19,6 +20,12 @@
   * Install Go
   * Set GOPATH to `PATH-TO-THIS-REPO/backend`
   * Run `sh backend/getGoDeps.sh`
+  * Setup MySQL
+    - `CREATE DATABASE SecurityAdventures;`
+    - `CREATE USER 'USER_NAME'@'localhost' IDENTIFIED BY 'PASSWORD';`
+    - `GRANT ALL PRIVILEGES ON SecurityAdventures . * TO 'zeroCool'@localhost';`
+    - Update `db.go` with USER_NAME and PASSWORD
+    - Seed the data: `mysql --user=USER_NAME --password=PASSWORD SecurityAdventures < SecurityAdventures/backend/src/schema.sql`
 
 ##Building the Backend
 Simple: `go build -o scoreboard SecurityAdventures/backend/src/main.go`

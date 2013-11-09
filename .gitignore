@@ -3,6 +3,9 @@ pkg/
 backend/src/code.google.com/
 backend/src/github.com/
 
+# Ignore compiled file
+backend/main
+
 # Mac stuff
 .DS_Store
 

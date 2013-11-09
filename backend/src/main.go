@@ -2,6 +2,7 @@ package main
 
 import (
     "db"
+    "flag"
     "fmt"
     "github.com/hoisie/web"
     "os"
@@ -22,7 +23,12 @@ func main() {
     // Setup the DB
     db.Init()
 
+    // Parse command line arguments
+    port := flag.Int("port", 80, "port number to start the server on")
+    flag.Parse()
+    url := fmt.Sprintf("0.0.0.0:%d", *port)
+
     // Start the server!
     serve.Routes()
-    web.Run("0.0.0.0:80")
+    web.Run(url)
 }

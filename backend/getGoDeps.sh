@@ -17,7 +17,6 @@ function get_dependencies () {
   echo "downloading go deps..."
 
   go get github.com/hoisie/web
-  # go install log4go.googlecode.com/hg
   go get github.com/go-sql-driver/mysql
 
   echo "...finished"

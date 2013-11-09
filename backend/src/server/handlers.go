@@ -1,17 +1,19 @@
 package serve
 
 import (
+    "bytes"
     "db"
     "domains"
     "encoding/json"
     "fmt"
+    "github.com/hoisie/web"
 )
 
 var successResponse = "{ \"msg\": \"success\" }"
 var errResponse = "{ \"msg\": \"have you ever danced with the devil in the pale moonlight?\" }"
 
 // GET REQUESTS -----------------------------------------------------------------------------------
-func getScoreboard() string {
+func getScoreboard(ctx *web.Context) string {
     scoreBoard := domains.Scoreboard{}
 
     users, err := db.GetUsers()
@@ -34,10 +36,23 @@ func getScoreboard() string {
     return constructGetResponse("scoreboard", scoreBoard, nil)
 }
 
-func getUsers() string {
+func getUsers(ctx *web.Context) string {
     users, err := db.GetUsers()
     return constructGetResponse("users", users, err)
 }
+
+// POST/PUT REQUESTS -----------------------------------------------------------------------------------
+// These requests only request a success / failure repsonse
+func validateFlag(ctx *web.Context) string {
+    return constructStandardResponse(nil)
+}
+
+// To be implemented ?
+func newUser(ctx *web.Context) string {
+    return constructStandardResponse(nil)
+}
+
+// RESPONSES CONSTRUCTION ------------------------------------------------------------------------------
 
 func constructGetResponse(key string, out interface{}, err error) string {
     if err != nil {
@@ -56,21 +71,10 @@ func constructGetResponse(key string, out interface{}, err error) string {
     return fmt.Sprintf("{ \"%s\": %s }", key, string(b))
 }
 
-// POST/PUT REQUESTS -----------------------------------------------------------------------------------
-// These requests only request a success / failure repsonse
-func validateFlag() string {
-
-    return constructStandardResponse(nil)
-}
-
-// To be implemented ?
-func newUser() string {
-    return constructStandardResponse(nil)
-}
-
 func constructStandardResponse(err error) string {
 
     if err != nil {
+        fmt.Println(err)
         return errResponse
     }
 

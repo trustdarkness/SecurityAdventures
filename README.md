@@ -1,7 +1,22 @@
-#Security Adventures CTF Server Project
-Author: Chris Dargis
+#Security Adventures CTF Server/Scoreboard Project
+###Author: Chris Dargis
+
+##Dependencies:
++ [Coffeescript](http://coffeescript.org/)
++ [LESS CSS](http://lesscss.org/)
++ [Go](http://golang.org/)
+  * [Go-MySQL-Driver](http://godoc.org/github.com/go-sql-driver/mysql)
+  * [web.go](http://webgo.io/)
 
 ##Setup:
++ Frontend
+  * Install coffeescript
+  * Install LESS CSS
+  * Run `sh frontend/compileFrontend.sh`
++ Backend
+  * Install Go
+  * Set GOPATH to `PATH-TO-THIS-REPO/backend`
+  * Run `sh backend/getGoDeps.sh`
 
 ##Running the Server:
-From `SecurityAdventures/` run `go run src/main.go`
+From `SecurityAdventures/` run `go run backend/src/main.go`

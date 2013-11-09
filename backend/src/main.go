@@ -24,5 +24,5 @@ func main() {
 
     // Start the server!
     serve.Routes()
-    web.Run("0.0.0.0:9999")
+    web.Run("0.0.0.0:80")
 }

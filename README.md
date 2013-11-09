@@ -23,5 +23,14 @@
 Simple: `go build -o scoreboard SecurityAdventures/backend/src/main.go`
 
 ##Running the Server
-You can run with `go run` command: from `SecurityAdventures/` run `go run backend/src/main.go`
-Or simply launch the build: `./scoreboard > traffic_log.txt`
+You can run with `go run` command:
+
+from `SecurityAdventures/` run `go run backend/src/main.go`
+
+Or simply launch the build:
+
+`./scoreboard > traffic_log.txt`
+
+You can also pass the port numbeer for the server to listen on:
+
+`./scoreboard --port=80`

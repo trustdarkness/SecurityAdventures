@@ -22,12 +22,36 @@ func GetFlagsForUser(uId int) ([]domains.Flag, error) {
     return flags, err
 }
 
-func PublishFlag(flag domains.Flag) error {
-    return nil
+// Return true if flag is validated
+func ValidateFlag(tag string) (bool, error) {
+    result, err := QueryRows("SELECT id FROM Flags f WHERE discovered = 0 AND tag = ?", Params(tag), rowToInt)
+
+    if err != nil {
+        return false, err
+    }
+
+    if len(result) == 0 {
+        return false, nil
+    }
+
+    id := result[0].(int)
+    err = UpdateRow("UPDATE Flags SET discovered = 1 WHERE id = ?", Params(id))
+
+    if err != nil {
+        return false, err
+    }
+
+    return true, nil
 }
 
 func rowToFlag(rows *sql.Rows) (interface{}, error) {
     flag := domains.Flag{}
     err := rows.Scan(&flag.Tag, &flag.Value, &flag.Discovered)
     return flag, err
+}
+
+func rowToInt(rows *sql.Rows) (interface{}, error) {
+    var r int
+    err := rows.Scan(&r)
+    return r, err
 }

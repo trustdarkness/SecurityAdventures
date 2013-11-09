@@ -81,6 +81,28 @@ func QueryRows(query string, input []interface{}, rowTransform RowTransformFunc)
     return results, nil
 }
 
+func UpdateRow(query string, params []interface{}) error {
+
+    db, err := openDB()
+    if err != nil {
+        return err
+    }
+    defer db.Close()
+
+    stmt, err := db.Prepare(query)
+    if err != nil {
+        return err
+    }
+    defer stmt.Close()
+
+    _, err = stmt.Exec(params...)
+    if err != nil {
+        return err
+    }
+
+    return nil
+}
+
 func Params(value ...interface{}) []interface{} {
     return value
 }

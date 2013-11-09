@@ -9,8 +9,18 @@ import (
     "github.com/hoisie/web"
 )
 
-var successResponse = "{ \"msg\": \"success\" }"
 var errResponse = "{ \"msg\": \"have you ever danced with the devil in the pale moonlight?\" }"
+
+type PostHandlerFunc func([]byte) string
+type ExecDomainHandlerFunc func(*web.Context) string
+
+func domainHandler(handler PostHandlerFunc) ExecDomainHandlerFunc {
+    return func(ctx *web.Context) string {
+        buf := new(bytes.Buffer)
+        buf.ReadFrom(ctx.Request.Body)
+        return handler(buf.Bytes())
+    }
+}
 
 // GET REQUESTS -----------------------------------------------------------------------------------
 func getScoreboard(ctx *web.Context) string {
@@ -42,14 +52,29 @@ func getUsers(ctx *web.Context) string {
 }
 
 // POST/PUT REQUESTS -----------------------------------------------------------------------------------
+
 // These requests only request a success / failure repsonse
-func validateFlag(ctx *web.Context) string {
-    return constructStandardResponse(nil)
+func validateFlag(b []byte) string {
+    flag, err := domains.BytesToFlag(b)
+    if err != nil {
+        return constructStandardResponse("", err)
+    }
+
+    found, err := db.ValidateFlag(flag.Tag)
+    if err != nil {
+        return constructStandardResponse("", err)
+    }
+
+    if found == true {
+        return constructStandardResponse("flag validated", nil)
+    }
+
+    return constructStandardResponse("flag not validated", nil)
 }
 
 // To be implemented ?
-func newUser(ctx *web.Context) string {
-    return constructStandardResponse(nil)
+func newUser(b []byte) string {
+    return constructStandardResponse("", nil)
 }
 
 // RESPONSES CONSTRUCTION ------------------------------------------------------------------------------
@@ -68,15 +93,16 @@ func constructGetResponse(key string, out interface{}, err error) string {
     if err != nil {
         return errResponse
     }
+
     return fmt.Sprintf("{ \"%s\": %s }", key, string(b))
 }
 
-func constructStandardResponse(err error) string {
+func constructStandardResponse(message string, err error) string {
 
     if err != nil {
         fmt.Println(err)
         return errResponse
     }
 
-    return successResponse
+    return fmt.Sprintf("{ \"msg\": \"%s\" }", message)
 }

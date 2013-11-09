@@ -1,7 +1,7 @@
 # Ignore go deps and packages downloaded with go install
 pkg/
-src/code.google.com/
-src/github.com/
+backend/src/code.google.com/
+backend/src/github.com/
 
 # Mac stuff
 .DS_Store

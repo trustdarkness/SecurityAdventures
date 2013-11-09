@@ -1,6 +1,6 @@
 #CTF Server/Scoreboard Project
 ####Chris Dargis
-####[Security Adventures](http://securityadventures.org/)
+[Security Adventures](http://securityadventures.org/)
 
 ##Dependencies
 + [Coffeescript](http://coffeescript.org/)

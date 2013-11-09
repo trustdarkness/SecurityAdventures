@@ -5,3 +5,9 @@ src/github.com/
 
 # Mac stuff
 .DS_Store
+
+# Coffee Compiled Files
+frontend/src/scripts/js/
+
+# Less generated files
+frontend/src/styles/css/

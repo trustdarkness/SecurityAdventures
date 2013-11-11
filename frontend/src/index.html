@@ -2,14 +2,47 @@
 <html lang="en">
   <head>
     <!-- Libraries -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.js"></script>
+    <script type="text/javascript" src="lib/jqueryUI.js"></script>
     <script type="text/javascript" src="lib/knockout-3.0.0.js"></script>
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="scripts/js/scoreboard.js"></script>
 
     <link rel="stylesheet" href="styles/css/main.css">
     <title>Scoreboard - Capture the Flag</title>
   </head>
-  <body>
-    Hi there!
+
+  <body id="Scoreboard">
+    <div class="container">
+      <div class="content">
+        <div class="header">
+          <h1>Capture the Flag</h1>
+          <h5>UIC Fall 2013</h5>
+        </div>
+
+        <div class="main">
+          <h3>Time Remaining:</h3>
+          <div>Some Time stuff</div>
+          <h3>Total Flags Found:</h3>
+          <h4 class="totalFlagsFound" data-bind="text: totalFlagsFound"></h4>
+
+          <table class="userTable" align="center">
+            <thead>
+              <tr><th><h3>Public ID</h3></th><th><h3>Flags Found</h3></th></tr>
+            </thead>
+            <tbody data-bind="foreach: users">
+              <tr>
+                <td><a href="#" data-bind="text: id"></a></td>
+                <td><a href="#" data-bind="text: flagsFound"></a></td>
+              </tr>
+            </tbody>
+            
+          </table>
+          <button data-bind="click: load">Load Model</button>
+        </div>
+      </div>
+    </div>
   </body>
+
 </html>

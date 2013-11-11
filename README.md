@@ -4,6 +4,7 @@
 
 ##Dependencies
 + [Coffeescript](http://coffeescript.org/)
++ [NPM](https://npmjs.org/)
 + [LESS CSS](http://lesscss.org/)
 + [Go](http://golang.org/)
   * [Go-MySQL-Driver](http://godoc.org/github.com/go-sql-driver/mysql)
@@ -14,7 +15,8 @@
 ##Setup
 + Frontend
   * Install coffeescript
-  * Install LESS CSS
+  * Install NPM
+  * Install LESS CSS: `npm install -g less`
   * Run `sh frontend/compileFrontend.sh`
 + Backend
   * Install Go

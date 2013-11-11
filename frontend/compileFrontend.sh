@@ -6,8 +6,8 @@ function compile_frontend () {
   mkdir -p src/scripts/js
   mkdir -p src/styles/css
 
-  coffee --compile --output src/scripts/js/ src/scripts/coffee/
-  less src/styles/less/* > src/styles/css/main.css
+  coffee --output src/scripts/js/ --compile src/scripts/coffee/
+  lessc src/styles/less/* > src/styles/css/main.css
 
   echo "...finished"
 }

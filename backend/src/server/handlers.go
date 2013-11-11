@@ -27,7 +27,7 @@ func domainHandler(handler PostHandlerFunc) ExecDomainHandlerFunc {
 func getScoreboard(ctx *web.Context) string {
     scoreBoard := domains.Scoreboard{}
 
-    users, err := db.GetUsers()
+    users, err := db.GetPublicUsers()
     if err != nil {
         return constructGetResponse("scoreboard", scoreBoard, err)
     }
@@ -47,8 +47,8 @@ func getScoreboard(ctx *web.Context) string {
     return constructGetResponse("scoreboard", scoreBoard, nil)
 }
 
-func getUsers(ctx *web.Context) string {
-    users, err := db.GetUsers()
+func getPublicUsers(ctx *web.Context) string {
+    users, err := db.GetPublicUsers()
     return constructGetResponse("users", users, err)
 }
 

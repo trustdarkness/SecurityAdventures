@@ -10,6 +10,10 @@ type User struct {
     Email    string `json:"email"`
 }
 
+type PublicUser struct {
+    PublicId int `json:"public_id"`
+}
+
 type Flag struct {
     Tag        string `json:"tag"`
     Value      int    `json:"value"`
@@ -17,8 +21,8 @@ type Flag struct {
 }
 
 type UsersFlagInfo struct {
-    User  User   `json:"user"`
-    Flags []Flag `json:"flags"`
+    User  PublicUser `json:"user"`
+    Flags []Flag     `json:"flags"`
 }
 
 type Scoreboard struct {

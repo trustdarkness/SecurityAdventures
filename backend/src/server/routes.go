@@ -8,7 +8,7 @@ func Routes() {
 
     // "Brain" stuff
     web.Get("/scoreboard", getScoreboard)
-    web.Get("/users", getUsers)
+    web.Get("/publicUsers", getPublicUsers)
     web.Put("/validateFlag", domainHandler(validateFlag))
 
     // To be implemented ?

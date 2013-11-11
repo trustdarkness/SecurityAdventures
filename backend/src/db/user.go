@@ -35,9 +35,31 @@ func GetUsers() ([]domains.User, error) {
     return users, nil
 }
 
+func GetPublicUsers() ([]domains.PublicUser, error) {
+    users := make([]domains.PublicUser, 0)
+    results, err := QueryRows("SELECT publicId FROM Users", nil, rowToUserPublic)
+
+    if err != nil {
+        return users, err
+    }
+
+    for _, result := range results {
+        user := result.(domains.PublicUser)
+        users = append(users, user)
+    }
+
+    return users, nil
+}
+
 // Transform funcs
 func rowToUser(rows *sql.Rows) (interface{}, error) {
     user := domains.User{}
     err := rows.Scan(&user.PublicId, &user.Name, &user.Email)
+    return user, err
+}
+
+func rowToUserPublic(rows *sql.Rows) (interface{}, error) {
+    user := domains.PublicUser{}
+    err := rows.Scan(&user.PublicId)
     return user, err
 }

@@ -39,6 +39,9 @@ scoreboardModel = ->
 
   m.load = -> loadModel m
 
+  m.toggleSubmission = ->
+    $("#FlagSubmission").toggle("slide", { direction: "up" } )
+
   m.totalFlagsFound = ko.computed ->
     found = 0
     for user in m.users()
@@ -50,6 +53,12 @@ scoreboardModel = ->
 scoreboardViewModel = () ->
   model = scoreboardModel()
   model.load()
+
+  $('#Counter').countdown({
+    image: '../../images/digits.png',
+    startTime: '12:12:00'
+  });
+
   model
 
 $(document).ready(->

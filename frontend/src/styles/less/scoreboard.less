@@ -3,6 +3,7 @@
 
 @light-grey: #CCCCCC;
 @med-grey: #DDDDDD;
+@very-dark-grey: #333333;
 
 @font-face {
   font-family: "Dense";
@@ -30,6 +31,12 @@ body {
 
 a {
   text-decoration: none;
+  color: @very-dark-grey;
+}
+
+input[type="text"] {
+  width: 185px;
+  font-size: 15px;
 }
 
 ul {
@@ -46,19 +53,19 @@ h1 {
 
 h2 {
   font-family: "Dense";
-  font-size: 40px;
+  font-size: 50px;
   .header-text-style();
 }
 
 h3 {
   font-family: "Dense";
-  font-size: 32px;
+  font-size: 42px;
   .header-text-style();
 }
 
 h4 {
   font-family: "Dense";
-  font-size: 28px;
+  font-size: 32px;
   .header-text-style();
 }
 
@@ -86,6 +93,52 @@ h1, h2, h3, h4, h5 {
         border-top: 1px solid #000;
       }
 
+      #FlagSubmission {
+        padding-top: 50px;
+        display: none;
+
+        input, button {
+          margin-top: 10px;
+        }
+      }
+
+      .flagSubmissionButton {
+        height: 50px;
+        width: 250px;
+        margin-top: 50px;
+        font-size: 16px;
+      }
+
+      .timeRemaining {
+        height: 175px;
+        margin: 50px 0 50px 0;
+
+        #Counter {
+          margin-left: 300px;
+        }
+
+        br { 
+          clear: both; 
+        }
+        .cntSeparator {
+          font-size: 54px;
+          margin: 10px 7px;
+          color: #000;
+        }
+
+        .descriptons {
+          margin: 20px 0 0 300px;
+
+          .desc {
+            width: 106px;
+            text-align: center;
+            display: block;
+            float: left;
+            padding-right: 24px;
+          }
+        }
+      }
+
       .userTable {
         width: 60%;
         border-collapse: collapse;
@@ -107,7 +160,7 @@ h1, h2, h3, h4, h5 {
 
           td {
             height: 40px;
-            width: 50%;
+            width: 33%;
             border-top: 1px solid #FFF;
           }
 

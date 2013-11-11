@@ -5,6 +5,7 @@
     <script type="text/javascript" src="lib/jquery.js"></script>
     <script type="text/javascript" src="lib/jqueryUI.js"></script>
     <script type="text/javascript" src="lib/knockout-3.0.0.js"></script>
+    <script type="text/javascript" src="lib/jquery.countdown.min.js" charset="utf-8"></script>
 
     <!-- Javascript -->
     <script type="text/javascript" src="scripts/js/scoreboard.js"></script>
@@ -22,19 +23,37 @@
         </div>
 
         <div class="main">
-          <h3>Time Remaining:</h3>
-          <div>Some Time stuff</div>
+          <div id="FlagSubmission">
+            <div><input type="text" placeholder="Public ID"></input></div>
+            <div><input type="text" placeholder="Flag Hash"></input></div>
+            <button>Submit to Server</button>
+          </div>
+          <button class="flagSubmissionButton" data-bind="click: toggleSubmission">Flag Submission</button>
+          <div class="timeRemaining">
+            <h3>Time Remaining:</h3>
+            <div id="Counter"></div>
+            <div class="descriptons">
+              <a class="desc">Hours</a>
+              <a class="desc">Minutes</a>
+              <a class="desc">Seconds</a>
+            </div>
+          </div>
           <h3>Total Flags Found:</h3>
           <h4 class="totalFlagsFound" data-bind="text: totalFlagsFound"></h4>
 
           <table class="userTable" align="center">
             <thead>
-              <tr><th><h3>Public ID</h3></th><th><h3>Flags Found</h3></th></tr>
+              <tr>
+                <th><h4>Public ID</h4></th>
+                <th><h4>Flags Found</h4></th>
+                <th><h4>Score</h4></th>
+              </tr>
             </thead>
             <tbody data-bind="foreach: users">
               <tr>
-                <td><a href="#" data-bind="text: id"></a></td>
-                <td><a href="#" data-bind="text: flagsFound"></a></td>
+                <td><a data-bind="text: id"></a></td>
+                <td><a data-bind="text: flagsFound"></a></td>
+                <td><a>10</a></td>
               </tr>
             </tbody>
             

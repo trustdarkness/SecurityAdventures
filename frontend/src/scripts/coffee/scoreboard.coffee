@@ -1,3 +1,18 @@
+myRealEscapeString = (str) ->
+  return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, (char) ->
+    switch char
+      when "\0" then "\\0"
+      when "\x08" then "\\b"
+      when "\x09" then "\\t"
+      when "\x1a" then "\\z"
+      when "\n" then "\\n"
+      when "\r" then "\\r"
+      when "\"" then "\\" + char
+      when "'" then "\\" + char
+      when "\\" then "\\" + char
+      when "%" then "\\" + char
+  )
+
 server = ->
   url = (route) -> "http://localhost:9999/#{route}"
   
@@ -31,13 +46,30 @@ userModel = (d) ->
   m.flagsFound = ko.computed ->
     m.flags().length
 
+  m.score = ko.computed ->
+    score = 0
+    for flag in m.flags()
+      score += flag.value
+    score
+
   m
 
 scoreboardModel = ->
+  validateFlagWthServer = (publicId, flagHash, cb) ->
+    console.dir publicId
+    console.dir flagHash
+    cb("response")
+
   m =
     users: ko.observableArray []
 
   m.load = -> loadModel m
+
+  m.validateFlag = (d, e) ->
+    publicId = myRealEscapeString($("#publicId").val())
+    flagHash = myRealEscapeString($("#flagHash").val())
+    validateFlagWthServer publicId, flagHash, (response) ->
+      console.log response
 
   m.toggleSubmission = ->
     $("#FlagSubmission").toggle("slide", { direction: "up" } )

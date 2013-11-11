@@ -24,9 +24,9 @@
 
         <div class="main">
           <div id="FlagSubmission">
-            <div><input type="text" placeholder="Public ID"></input></div>
-            <div><input type="text" placeholder="Flag Hash"></input></div>
-            <button>Submit to Server</button>
+            <div><input id="publicId" type="text" placeholder="Public ID"></input></div>
+            <div><input id="flagHash" type="text" placeholder="Flag Hash"></input></div>
+            <button data-bind="click: validateFlag">Submit to Server</button>
           </div>
           <button class="flagSubmissionButton" data-bind="click: toggleSubmission">Flag Submission</button>
           <div class="timeRemaining">
@@ -53,7 +53,7 @@
               <tr>
                 <td><a data-bind="text: id"></a></td>
                 <td><a data-bind="text: flagsFound"></a></td>
-                <td><a>10</a></td>
+                <td><a data-bind="text: score"></a></td>
               </tr>
             </tbody>
             

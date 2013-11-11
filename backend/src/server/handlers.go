@@ -56,12 +56,12 @@ func getPublicUsers(ctx *web.Context) string {
 
 // These requests only request a success / failure repsonse
 func validateFlag(b []byte) string {
-    flag, err := domains.BytesToFlag(b)
+    userFlagInfo, err := domains.BytesToUsersFlagInfo(b)
     if err != nil {
         return constructStandardResponse("", err)
     }
 
-    found, err := db.ValidateFlag(flag.Tag)
+    found, err := db.ValidateFlagFor(userFlagInfo.Flags[0].Tag, userFlagInfo.User.PublicId)
     if err != nil {
         return constructStandardResponse("", err)
     }

@@ -40,3 +40,15 @@ func BytesToUser(b []byte) (User, error) {
     err := json.Unmarshal(b, &user)
     return user, err
 }
+
+func BytesToPublicUser(b []byte) (PublicUser, error) {
+    publicUser := PublicUser{}
+    err := json.Unmarshal(b, &publicUser)
+    return publicUser, err
+}
+
+func BytesToUsersFlagInfo(b []byte) (UsersFlagInfo, error) {
+    userFlagInfp := UsersFlagInfo{}
+    err := json.Unmarshal(b, &userFlagInfp)
+    return userFlagInfp, err
+}

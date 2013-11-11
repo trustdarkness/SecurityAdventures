@@ -27,7 +27,7 @@ func openDB() (*sql.DB, error) {
     return sql.Open("mysql", openString)
 }
 
-func Insert(query string) (int, error) {
+func Insert(query string, input []interface{}) (int, error) {
 
     db, err := openDB()
     if err != nil {
@@ -41,7 +41,7 @@ func Insert(query string) (int, error) {
     }
     defer stmt.Close()
 
-    res, err := stmt.Exec()
+    res, err := stmt.Exec(input...)
     if err != nil {
         return -1, err
     }

@@ -1,8 +1,10 @@
 package db
 
 import (
+    l4g "code.google.com/p/log4go"
     "database/sql"
     "domains"
+    "fmt"
 )
 
 func GetFlagsForUser(uId int) ([]domains.Flag, error) {
@@ -23,8 +25,8 @@ func GetFlagsForUser(uId int) ([]domains.Flag, error) {
 }
 
 // Return true if flag is validated
-func ValidateFlag(tag string) (bool, error) {
-    result, err := QueryRows("SELECT id FROM Flags f WHERE discovered = 0 AND tag = ?", Params(tag), rowToInt)
+func ValidateFlagFor(tag string, publicId int) (bool, error) {
+    result, err := QueryRows("SELECT id FROM Flags WHERE discovered = 0 AND tag = ?", Params(tag), rowToInt)
 
     if err != nil {
         return false, err
@@ -34,10 +36,28 @@ func ValidateFlag(tag string) (bool, error) {
         return false, nil
     }
 
-    id := result[0].(int)
-    err = UpdateRow("UPDATE Flags SET discovered = 1 WHERE id = ?", Params(id))
+    flagId := result[0].(int)
+
+    result, err = QueryRows("SELECT id FROM Users WHERE publicId = ?", Params(publicId), rowToInt)
+    if len(result) == 0 {
+        return false, nil
+    }
+
+    userId := result[0].(int)
+
+    _, err = Insert("INSERT UsersFlags VALUES (?, ?) ", Params(userId, flagId))
+    if err != nil {
+        errMsg := fmt.Sprintf("Failed INSERT to UsersFlags for USER %d and FLAG %d", userId, flagId)
+        l4g.Error(errMsg)
+        return false, err
+    }
+
+    err = UpdateRow("UPDATE Flags SET discovered = 1 WHERE id = ?", Params(flagId))
 
     if err != nil {
+        errMsg := fmt.Sprintf("Failed UPDATE to Flags for USER %d and FLAG %d - trying to SET flag discovered",
+            userId, flagId)
+        l4g.Error(errMsg)
         return false, err
     }
 

@@ -45,7 +45,7 @@ func ValidateFlagFor(tag string, publicId int) (bool, error) {
 
     userId := result[0].(int)
 
-    _, err = Insert("INSERT UsersFlags VALUES (?, ?) ", Params(userId, flagId))
+    _, err = Insert("INSERT UsersFlags (uId, fId) VALUES (?, ?) ", Params(userId, flagId))
     if err != nil {
         errMsg := fmt.Sprintf("Failed INSERT to UsersFlags for USER %d and FLAG %d", userId, flagId)
         l4g.Error(errMsg)

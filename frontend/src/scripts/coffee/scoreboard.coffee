@@ -14,8 +14,8 @@ myRealEscapeString = (str) ->
   )
 
 server = ->
-  url = (route) -> "http://localhost:9999/#{route}"
   
+  url = (route) -> "http://localhost:9999/#{route}"
   call = (route, callback) ->
     $.getJSON route, {}, callback
 
@@ -25,6 +25,7 @@ server = ->
       data: JSON.stringify (data || {})
       type: type
       dataType: "json"
+      contentType: "application/json"
       success: if cb? then cb else ->
 
   m =
@@ -37,6 +38,22 @@ loadModel = (model) ->
   server.fetch "scoreboard", ({scoreboard: data}) ->
     for score in data.scores
       model.users.push userModel(score)
+
+reloadModel = (model) ->
+  server.fetch "scoreboard", ({scoreboard: data}) ->
+    for score in data.scores
+      userMatch = ko.utils.arrayFirst model.users(), (item) ->
+        score.user.public_id == item.id
+      if userMatch?
+        userMatch.flags score.flags
+
+createUserFlagModel = (data) ->
+  user:
+    public_id: data.public_id
+  flags:
+    [
+      { tag: data.tag, value: data.value, discovered: data.discovered }
+    ]
 
 userModel = (d) ->
   m =
@@ -56,20 +73,23 @@ userModel = (d) ->
 
 scoreboardModel = ->
   validateFlagWthServer = (publicId, flagHash, cb) ->
-    console.dir publicId
-    console.dir flagHash
-    cb("response")
+    userflagModel = createUserFlagModel { public_id: publicId, tag: flagHash, value: 1, discovered: false }
+    server.update "validateFlag", cb, userflagModel
 
   m =
     users: ko.observableArray []
 
   m.load = -> loadModel m
 
+  m.reload = -> reloadModel m
+
   m.validateFlag = (d, e) ->
-    publicId = myRealEscapeString($("#publicId").val())
+    publicId = parseInt(myRealEscapeString($("#publicId").val()))
     flagHash = myRealEscapeString($("#flagHash").val())
     validateFlagWthServer publicId, flagHash, (response) ->
-      console.log response
+      if response.msg == "flag validated"
+        m.reload()
+      alert response.msg
 
   m.toggleSubmission = ->
     $("#FlagSubmission").toggle("slide", { direction: "up" } )
@@ -90,6 +110,9 @@ scoreboardViewModel = () ->
     image: '../../images/digits.png',
     startTime: '12:12:00'
   });
+
+  # Setup a timer every 5 seconds
+  setInterval model.reload, 5000
 
   model
 

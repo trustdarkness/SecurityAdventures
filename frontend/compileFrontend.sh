@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 function compile_frontend () {

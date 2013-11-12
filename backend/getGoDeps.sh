@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # IF you are a windows user, this script won't work for you, har har har!
 

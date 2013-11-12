@@ -15,7 +15,6 @@ CREATE TABLE Flags (
     host VARCHAR(32) NOT NULL,
     tag VARCHAR(32) NOT NULL,
     value INT NOT NULL,
-    discovered BOOLEAN NOT NULL,
     comment VARCHAR(128),
     PRIMARY KEY (id)
 );

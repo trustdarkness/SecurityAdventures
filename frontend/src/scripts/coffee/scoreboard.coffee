@@ -52,7 +52,7 @@ createUserFlagModel = (data) ->
     public_id: data.public_id
   flags:
     [
-      { tag: data.tag, value: data.value, discovered: data.discovered }
+      { tag: data.tag, value: data.value }
     ]
 
 userModel = (d) ->
@@ -73,7 +73,7 @@ userModel = (d) ->
 
 scoreboardModel = ->
   validateFlagWthServer = (publicId, flagHash, cb) ->
-    userflagModel = createUserFlagModel { public_id: publicId, tag: flagHash, value: 1, discovered: false }
+    userflagModel = createUserFlagModel { public_id: publicId, tag: flagHash, value: 1 }
     server.update "validateFlag", cb, userflagModel
 
   m =

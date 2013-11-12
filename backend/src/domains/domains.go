@@ -15,9 +15,8 @@ type PublicUser struct {
 }
 
 type Flag struct {
-    Tag        string `json:"tag"`
-    Value      int    `json:"value"`
-    Discovered bool   `json:"discovered"`
+    Tag   string `json:"tag"`
+    Value int    `json:"value"`
 }
 
 type UsersFlagInfo struct {

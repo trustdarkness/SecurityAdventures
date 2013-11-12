@@ -10,6 +10,8 @@
     <!-- Javascript -->
     <script type="text/javascript" src="scripts/js/scoreboard.js"></script>
 
+    <!-- Styles -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="styles/css/main.css">
     <title>Scoreboard - Capture the Flag</title>
   </head>
@@ -23,12 +25,6 @@
         </div>
 
         <div class="main">
-          <div id="FlagSubmission">
-            <div><input id="publicId" type="text" placeholder="Public ID"></input></div>
-            <div><input id="flagHash" type="text" placeholder="Flag Hash"></input></div>
-            <button data-bind="click: validateFlag">Submit to Server</button>
-          </div>
-          <button class="flagSubmissionButton" data-bind="click: toggleSubmission">Flag Submission</button>
           <div class="timeRemaining">
             <h3>Time Remaining:</h3>
             <div id="Counter"></div>
@@ -54,15 +50,34 @@
             </thead>
             <tbody data-bind="foreach: users">
               <tr>
-                <td><a data-bind="text: id"></a></td>
+                <td><a class="publicId" href="#" data-bind="text: id, click: $parent.displayUsersFlags"></a></td>
                 <td><a data-bind="text: flagsFound"></a></td>
                 <td><a data-bind="text: score"></a></td>
               </tr>
             </tbody>
           </table>
+
+          <div id="FlagSubmission">
+            <div><input id="publicId" type="text" placeholder="Public ID"></input></div>
+            <div><input id="flagHash" type="text" placeholder="Flag Hash"></input></div>
+            <button data-bind="click: validateFlag">Submit to Server</button>
+          </div>
+          <button class="flagSubmissionButton" data-bind="click: toggleSubmission">Flag Submission</button>
+
         </div>
       </div>
     </div>
-  </body>
 
+    <!-- Dialogs -->
+    <div id="UserFlagInfoModal" title="Captured Flags" data-bind="with: userModelForDialog">
+      <div data-bind="text: computeId()"></div>
+      <ul data-bind="foreach: flags">
+        <li>
+          <div href="#" data-bind="text: $parent.computeTag($data)"></div>
+          <div href="#" data-bind="text: $parent.computeValue($data)"></div>
+        </li>
+      </ul>
+    </div>
+
+  </body>
 </html>

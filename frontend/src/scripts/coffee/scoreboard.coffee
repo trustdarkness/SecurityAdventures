@@ -38,6 +38,7 @@ loadModel = (model) ->
   server.fetch "scoreboard", ({scoreboard: data}) ->
     for score in data.scores
       model.users.push userModel(score)
+    model.sortUsers()
 
 reloadModel = (model) ->
   server.fetch "scoreboard", ({scoreboard: data}) ->
@@ -46,6 +47,7 @@ reloadModel = (model) ->
         score.user.public_id == item.id
       if userMatch?
         userMatch.flags score.flags
+    model.sortUsers()
 
 createUserFlagModel = (data) ->
   user:
@@ -71,6 +73,20 @@ userModel = (d) ->
 
   m
 
+userModelForDialog = ->
+  m =
+    id: ko.observable -1
+    flags: ko.observableArray []
+
+  m.computeId = -> "User " + m.id()
+  m.computeTag = (flag) -> "Hash: " + flag.tag
+  m.computeValue = (flag) -> "Value: " + flag.value
+  m
+
+sortUsers = (model) ->
+  model.users.sort (left, right) ->
+    left.score() < right.score()
+
 scoreboardModel = ->
   validateFlagWthServer = (publicId, flagHash, cb) ->
     userflagModel = createUserFlagModel { public_id: publicId, tag: flagHash, value: 1 }
@@ -83,16 +99,23 @@ scoreboardModel = ->
 
   m.reload = -> reloadModel m
 
+  m.sortUsers = -> sortUsers m
+
   m.validateFlag = (d, e) ->
     publicId = parseInt(myRealEscapeString($("#publicId").val()))
     flagHash = myRealEscapeString($("#flagHash").val())
     validateFlagWthServer publicId, flagHash, (response) ->
       if response.msg == "flag validated"
         m.reload()
-      alert response.msg
 
   m.toggleSubmission = ->
     $("#FlagSubmission").toggle("slide", { direction: "up" } )
+
+  m.displayUsersFlags = (d, e) ->
+    m.userModelForDialog.id d.id
+    m.userModelForDialog.flags d.flags()
+    $("#UserFlagInfoModal").dialog
+      modal: true
 
   m.totalFlagsFound = ko.computed ->
     found = 0
@@ -100,15 +123,28 @@ scoreboardModel = ->
       found += user.flagsFound()
     found
 
+  m.userModelForDialog = userModelForDialog()
+
   m
+
+padZero = (str) ->
+  if str.length == 1
+    return "0" + str
+  else return str
 
 scoreboardViewModel = () ->
   model = scoreboardModel()
   model.load()
 
-  $('#Counter').countdown({
-    image: '../../images/digits.png',
-    startTime: '12:12:00'
+  now = new Date()
+  andThen = new Date("Nov 25 2013 18:00:00 CST")
+  diff = new Date(andThen - now)
+  hours = padZero(diff.getHours() + "")
+  minutes = padZero(diff.getMinutes() + "")
+  seconds = padZero(diff.getSeconds() + "")
+  $("#Counter").countdown({
+    image: "../../images/digits.png",
+    startTime: "#{hours}:#{minutes}:#{seconds}"
   });
 
   # Setup a timer every 5 seconds

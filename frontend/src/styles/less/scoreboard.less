@@ -104,22 +104,6 @@ h1, h2, h3, h4, h5 {
         padding-bottom: 50px;
       }
 
-      #FlagSubmission {
-        padding-top: 45px;
-        display: none;
-
-        input, button {
-          margin-top: 10px;
-        }
-      }
-
-      .flagSubmissionButton {
-        height: 50px;
-        width: 250px;
-        margin-top: 50px;
-        font-size: 16px;
-      }
-
       .timeRemaining {
         height: 175px;
         margin: 50px 0 50px 0;
@@ -156,6 +140,10 @@ h1, h2, h3, h4, h5 {
 
         a {
           padding: 10px;
+
+          &.publicId {
+            text-decoration: underline;
+          }
         }
 
         h3 {
@@ -184,10 +172,34 @@ h1, h2, h3, h4, h5 {
           }
         }
       }
+
+      #FlagSubmission {
+        padding-top: 45px;
+        display: none;
+
+        input, button {
+          margin-top: 10px;
+        }
+      }
+
+      .flagSubmissionButton {
+        height: 50px;
+        width: 250px;
+        margin-top: 50px;
+        font-size: 16px;
+      }
     }
   }
 }
 
+// Modals
+#UserFlagInfoModal {
+  display: none;
+  font-size: 14px;
 
+  div {
+    display: inline-block;
+  }
+}
 
 

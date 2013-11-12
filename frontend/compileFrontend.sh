@@ -1,5 +1,4 @@
-
-#!/bin/bash
+#!/bin/sh
 
 function compile_frontend () {
   echo "compiling frontend..."

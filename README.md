@@ -3,8 +3,8 @@
 [Security Adventures](http://securityadventures.org/)
 
 ##Dependencies
-+ [Coffeescript](http://coffeescript.org/)
 + [NPM](https://npmjs.org/)
++ [Coffeescript](http://coffeescript.org/)
 + [LESS CSS](http://lesscss.org/)
 + [Go](http://golang.org/)
   * [Go-MySQL-Driver](http://godoc.org/github.com/go-sql-driver/mysql)
@@ -14,8 +14,8 @@
 
 ##Setup
 + Frontend
-  * Install coffeescript
   * Install NPM
+  * Install coffeescript: `npm install -g coffee-script`
   * Install LESS CSS: `npm install -g less`
   * Run `sh frontend/compileFrontend.sh`
 + Backend

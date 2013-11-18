@@ -10,7 +10,7 @@ import (
     "github.com/hoisie/web"
 )
 
-var errResponse = "{ \"msg\": \"have you ever danced with the devil in the pale moonlight?\" }"
+var errResponse = "{ \"msg\": \"an error occurred, please try again\" }"
 
 type PostHandlerFunc func([]byte) string
 type ExecDomainHandlerFunc func(*web.Context) string

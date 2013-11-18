@@ -17,3 +17,8 @@ frontend/src/styles/css/
 
 # Ignore logs
 error_log.log
+
+# Ignore CSV's and seed data
+flags.csv
+users.csv
+seed.sql

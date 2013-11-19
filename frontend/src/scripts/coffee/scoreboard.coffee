@@ -14,7 +14,7 @@ myRealEscapeString = (str) ->
 
 server = ->
   
-  url = (route) -> "http://localhost:9999/#{route}"
+  url = (route) -> "http://localhost:80/#{route}"
   call = (route, callback) ->
     $.getJSON route, {}, callback
 

@@ -24,7 +24,8 @@ type PublicFlag struct {
 }
 
 type ValidateFlag struct {
-    Tag string `json:"tag"`
+    PublicUserId int    `json:"public_user_id"`
+    Tag          string `json:"tag"`
 }
 
 type UsersFlagInfo struct {
@@ -69,6 +70,12 @@ func BytesToPublicUser(b []byte) (PublicUser, error) {
     publicUser := PublicUser{}
     err := json.Unmarshal(b, &publicUser)
     return publicUser, err
+}
+
+func BytesToUsersFlagInfo(b []byte) (UsersFlagInfo, error) {
+    userFlagInfp := UsersFlagInfo{}
+    err := json.Unmarshal(b, &userFlagInfp)
+    return userFlagInfp, err
 }
 
 func BytesToUsersFlagInfo(b []byte) (UsersFlagInfo, error) {

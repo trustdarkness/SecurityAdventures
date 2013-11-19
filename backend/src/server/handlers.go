@@ -56,21 +56,27 @@ func getPublicUsers(ctx *web.Context) string {
 
 // These requests only request a success / failure repsonse
 func validateFlag(b []byte) string {
-    userFlagInfo, err := domains.BytesToUsersFlagInfo(b)
+
+    validateFlag, err := domains.BytesToValidateFlag(b)
     if err != nil {
         return constructStandardResponse("", err)
     }
 
-    found, err := db.ValidateFlagFor(userFlagInfo.Flags[0].Tag, userFlagInfo.User.PublicId)
-    if err != nil {
-        return constructStandardResponse("", err)
-    }
+    // userFlagInfo, err := domains.BytesToUsersFlagInfo(b)
+    // if err != nil {
+    //     return constructStandardResponse("", err)
+    // }
 
-    if found == true {
-        return constructStandardResponse("flag validated", nil)
-    }
+    // found, err := db.ValidateFlagFor(userFlagInfo.Flags[0].Tag, userFlagInfo.User.PublicId)
+    // if err != nil {
+    //     return constructStandardResponse("", err)
+    // }
 
-    return constructStandardResponse("flag not validated", nil)
+    // if found == true {
+    //     return constructStandardResponse("flag validated", nil)
+    // }
+
+    // return constructStandardResponse("flag not validated", nil)
 }
 
 // To be implemented ?

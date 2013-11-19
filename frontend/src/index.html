@@ -50,7 +50,7 @@
             </thead>
             <tbody data-bind="foreach: users">
               <tr>
-                <td><a class="publicId" href="#" data-bind="text: id, click: $parent.displayUsersFlags"></a></td>
+                <td><a class="publicId" data-bind="text: id"></a></td>
                 <td><a data-bind="text: flagsFound"></a></td>
                 <td><a data-bind="text: score"></a></td>
               </tr>
@@ -66,17 +66,6 @@
 
         </div>
       </div>
-    </div>
-
-    <!-- Dialogs -->
-    <div id="UserFlagInfoModal" title="Captured Flags" data-bind="with: userModelForDialog">
-      <div data-bind="text: computeId()"></div>
-      <ul data-bind="foreach: flags">
-        <li>
-          <div href="#" data-bind="text: $parent.computeTag($data)"></div>
-          <div href="#" data-bind="text: $parent.computeValue($data)"></div>
-        </li>
-      </ul>
     </div>
 
   </body>

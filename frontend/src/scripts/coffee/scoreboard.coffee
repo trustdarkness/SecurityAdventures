@@ -1,5 +1,5 @@
 myRealEscapeString = (str) ->
-  return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, (char) ->
+  return str.replace /[\0\x08\x09\x1a\n\r"'\\\%]/g, (char) ->
     switch char
       when "\0" then "\\0"
       when "\x08" then "\\b"
@@ -11,7 +11,6 @@ myRealEscapeString = (str) ->
       when "'" then "\\" + char
       when "\\" then "\\" + char
       when "%" then "\\" + char
-  )
 
 server = ->
   
@@ -44,23 +43,15 @@ reloadModel = (model) ->
   server.fetch "scoreboard", ({scoreboard: data}) ->
     for score in data.scores
       userMatch = ko.utils.arrayFirst model.users(), (item) ->
-        score.user.public_id == item.id
+        score.public_user.public_id == item.id
       if userMatch?
-        userMatch.flags score.flags
+        userMatch.flags score.public_flags
     model.sortUsers()
-
-createUserFlagModel = (data) ->
-  user:
-    public_id: data.public_id
-  flags:
-    [
-      { tag: data.tag, value: data.value }
-    ]
 
 userModel = (d) ->
   m =
-    id: d.user.public_id
-    flags: ko.observableArray d.flags
+    id: d.public_user.public_id
+    flags: ko.observableArray d.public_flags
 
   m.flagsFound = ko.computed ->
     m.flags().length
@@ -73,24 +64,14 @@ userModel = (d) ->
 
   m
 
-userModelForDialog = ->
-  m =
-    id: ko.observable -1
-    flags: ko.observableArray []
-
-  m.computeId = -> "User " + m.id()
-  m.computeTag = (flag) -> "Hash: " + flag.tag
-  m.computeValue = (flag) -> "Value: " + flag.value
-  m
-
 sortUsers = (model) ->
   model.users.sort (left, right) ->
     left.score() < right.score()
 
 scoreboardModel = ->
   validateFlagWthServer = (publicId, flagHash, cb) ->
-    userflagModel = createUserFlagModel { public_id: publicId, tag: flagHash, value: 1 }
-    server.update "validateFlag", cb, userflagModel
+    validateFlagModel = { public_user_id: publicId, tag: flagHash }
+    server.update "validateFlag", cb, validateFlagModel
 
   m =
     users: ko.observableArray []
@@ -107,23 +88,16 @@ scoreboardModel = ->
     validateFlagWthServer publicId, flagHash, (response) ->
       if response.msg == "flag validated"
         m.reload()
+      alert response.msg
 
   m.toggleSubmission = ->
     $("#FlagSubmission").toggle("slide", { direction: "up" } )
-
-  m.displayUsersFlags = (d, e) ->
-    m.userModelForDialog.id d.id
-    m.userModelForDialog.flags d.flags()
-    $("#UserFlagInfoModal").dialog
-      modal: true
 
   m.totalFlagsFound = ko.computed ->
     found = 0
     for user in m.users()
       found += user.flagsFound()
     found
-
-  m.userModelForDialog = userModelForDialog()
 
   m
 

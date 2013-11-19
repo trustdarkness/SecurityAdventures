@@ -25,3 +25,5 @@ seed.sql
 
 # Ignore DB config
 dbconfig.txt
+
+node_modules/*

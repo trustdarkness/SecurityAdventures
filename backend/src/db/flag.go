@@ -41,16 +41,15 @@ func GetPublicFlagsForUser(uId int) ([]domains.PublicFlag, error) {
     return publicFlags, err
 }
 
-// Return true if flag is validated
-func ValidateFlagFor(tag string, publicId int) (bool, error) {
+func ValidateFlagFor(tag string, publicId int) (string, error) {
 
     result, err := QueryRows("SELECT id FROM Flags WHERE tag = ?", Params(tag), rowToInt)
     if err != nil {
-        return false, err
+        return "error", err
     }
 
     if len(result) == 0 {
-        return false, nil
+        return "flag does not exist", nil
     }
 
     flagId := result[0].(int)
@@ -58,23 +57,21 @@ func ValidateFlagFor(tag string, publicId int) (bool, error) {
     // Get users DB id
     result, err = QueryRows("SELECT id FROM Users WHERE publicId = ?", Params(publicId), rowToInt)
     if err != nil {
-        return false, err
+        return "error", err
     }
-
     if len(result) == 0 { // User not found
-        return false, nil
+        return "user does not exist", nil
     }
 
     userId := result[0].(int)
 
     // Check if it was already validated
-    result, err = QueryRows("SELECT uId FROM UsersFlags WHERE fId = ?", Params(flagId), rowToInt)
+    result, err = QueryRows("SELECT uId FROM UsersFlags WHERE fId = ? AND uId = ?", Params(flagId, userId), rowToInt)
     if err != nil {
-        return false, err
+        return "error", err
     }
-
     if len(result) != 0 { // Flag found
-        return false, nil
+        return "flag already validated", nil
     }
 
     // Set the flag as found
@@ -82,10 +79,10 @@ func ValidateFlagFor(tag string, publicId int) (bool, error) {
     if err != nil {
         errMsg := fmt.Sprintf("Failed INSERT to UsersFlags for USER %d and FLAG %d", userId, flagId)
         l4g.Error(errMsg)
-        return false, err
+        return "flag not validated", err
     }
 
-    return true, nil
+    return "flag validated", nil
 }
 
 func rowToFlag(rows *sql.Rows) (interface{}, error) {

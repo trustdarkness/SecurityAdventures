@@ -73,13 +73,7 @@ func BytesToPublicUser(b []byte) (PublicUser, error) {
 }
 
 func BytesToUsersFlagInfo(b []byte) (UsersFlagInfo, error) {
-    userFlagInfp := UsersFlagInfo{}
-    err := json.Unmarshal(b, &userFlagInfp)
-    return userFlagInfp, err
-}
-
-func BytesToUsersFlagInfo(b []byte) (UsersFlagInfo, error) {
-    userFlagInfp := UsersFlagInfo{}
-    err := json.Unmarshal(b, &userFlagInfp)
-    return userFlagInfp, err
+    userFlagInfo := UsersFlagInfo{}
+    err := json.Unmarshal(b, &userFlagInfo)
+    return userFlagInfo, err
 }

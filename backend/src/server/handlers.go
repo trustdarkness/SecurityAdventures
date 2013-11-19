@@ -62,21 +62,9 @@ func validateFlag(b []byte) string {
         return constructStandardResponse("", err)
     }
 
-    // userFlagInfo, err := domains.BytesToUsersFlagInfo(b)
-    // if err != nil {
-    //     return constructStandardResponse("", err)
-    // }
+    msg, err := db.ValidateFlagFor(validateFlag.Tag, validateFlag.PublicUserId)
 
-    // found, err := db.ValidateFlagFor(userFlagInfo.Flags[0].Tag, userFlagInfo.User.PublicId)
-    // if err != nil {
-    //     return constructStandardResponse("", err)
-    // }
-
-    // if found == true {
-    //     return constructStandardResponse("flag validated", nil)
-    // }
-
-    // return constructStandardResponse("flag not validated", nil)
+    return constructStandardResponse(msg, err)
 }
 
 // To be implemented ?

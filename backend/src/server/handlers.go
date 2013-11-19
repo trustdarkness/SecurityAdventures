@@ -23,9 +23,10 @@ func domainHandler(handler PostHandlerFunc) ExecDomainHandlerFunc {
     }
 }
 
-// GET REQUESTS -----------------------------------------------------------------------------------
+// GET REQUESTS --------------------------------------------------------------------------------------
 func getScoreboard(ctx *web.Context) string {
     scoreBoard := domains.Scoreboard{}
+    scoreBoard.Scores = make([]domains.UsersPublicFlagInfo, 0)
 
     users, err := db.GetPublicUsers()
     if err != nil {

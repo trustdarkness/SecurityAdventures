@@ -30,6 +30,12 @@
     - Initialize the Schema: `mysql --user=USER_NAME --password=PASSWORD SecurityAdventures < SecurityAdventures/backend/schema.sql`
     - Use the shell script to generate SQL: `sh SecurityAdventures/backend/generateSQL.sh`
     - Run generated SQL script: `mysql --user=USER_NAME --password=PASSWORD SecurityAdventures < seed.sql`
+    - Create a `dbconfig.txt` file that looks something like this:
+  
+  User = "zeroCool"
+  Pass = "crash"
+  DBName = "SecurityAdventures"
+
 
 ##Building the Backend
 Simple: `go build -o scoreboard SecurityAdventures/backend/src/main.go`

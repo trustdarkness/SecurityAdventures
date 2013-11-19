@@ -27,8 +27,9 @@
     - `CREATE USER 'USER_NAME'@'localhost' IDENTIFIED BY 'PASSWORD';`
     - `GRANT ALL PRIVILEGES ON SecurityAdventures . * TO 'USER_NAME'@localhost';`
     - Update `db.go` with USER_NAME and PASSWORD
-    - Seed the data:
-    `mysql --user=USER_NAME --password=PASSWORD SecurityAdventures < SecurityAdventures/backend/src/schema.sql`
+    - Initialize the Schema: `mysql --user=USER_NAME --password=PASSWORD SecurityAdventures < SecurityAdventures/backend/src/schema.sql`
+    - Use the shell script to generate SQL: `sh SecurityAdventures/backend/generateSQL.sh`
+    - Run generated SQL script: `mysql --user=USER_NAME --password=PASSWORD SecurityAdventures < seed.sql`
 
 ##Building the Backend
 Simple: `go build -o scoreboard SecurityAdventures/backend/src/main.go`

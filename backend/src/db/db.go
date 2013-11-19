@@ -1,9 +1,13 @@
 package db
 
 import (
+    "bufio"
+    l4g "code.google.com/p/log4go"
     "database/sql"
     "fmt"
     _ "github.com/go-sql-driver/mysql"
+    "os"
+    "strings"
 )
 
 type DBConfig struct {
@@ -16,10 +20,34 @@ type RowTransformFunc func(*sql.Rows) (interface{}, error)
 
 var dbConfig DBConfig
 
-func Init() {
-    dbConfig.User = "zeroCool"
-    dbConfig.Pass = "crash"
-    dbConfig.DBName = "SecurityAdventures"
+func Init(path string) {
+    fullPath := fmt.Sprintf("%s/dbconfig.txt", path)
+    file, err := os.Open(fullPath)
+    if err != nil {
+        l4g.Error("Could not open dbconfig.txt")
+        return
+    }
+    defer file.Close()
+
+    scanner := bufio.NewScanner(file)
+    for scanner.Scan() {
+        tokens := strings.Split(scanner.Text(), "=")
+        for index, token := range tokens {
+            token = strings.Trim(token, " \"")
+            tokens[index] = token
+        }
+        key := tokens[0]
+        value := tokens[1]
+        if key == "User" {
+            dbConfig.User = value
+        }
+        if key == "Pass" {
+            dbConfig.Pass = value
+        }
+        if key == "DBName" {
+            dbConfig.DBName = value
+        }
+    }
 }
 
 func openDB() (*sql.DB, error) {

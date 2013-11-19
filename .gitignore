@@ -22,3 +22,6 @@ error_log.log
 flags.csv
 users.csv
 seed.sql
+
+# Ignore DB config
+dbconfig.txt

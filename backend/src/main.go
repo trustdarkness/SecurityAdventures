@@ -21,15 +21,14 @@ func main() {
     filepath := fmt.Sprintf("%s/../frontend/src/", path)
     web.Config.StaticDir = filepath
 
-    // Setup the DB
-    db.Init()
-
     // Setup logging
     log := make(l4g.Logger)
-
     // Create a default logger that is logging messages of FINE or higher
     l4g.AddFilter("file", l4g.FINE, l4g.NewFileLogWriter("error_log.log", false))
     log.Close()
+
+    // Setup the DB
+    db.Init(path)
 
     // Parse command line arguments
     port := flag.Int("port", 80, "port number to start the server on")

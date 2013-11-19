@@ -106,20 +106,33 @@ padZero = (str) ->
     return "0" + str
   else return str
 
-scoreboardViewModel = () ->
-  model = scoreboardModel()
-  model.load()
-
+startCountdown = ->
+  _second = 1000;
+  _minute = _second * 60;
+  _hour = _minute * 60;
+  _day = _hour * 24;
+  
   now = new Date()
-  andThen = new Date("Nov 25 2013 18:00:00 CST")
+  andThen = new Date("Nov 25 2013 20:00:00 CST")
   diff = new Date(andThen - now)
-  hours = padZero(diff.getHours() + "")
-  minutes = padZero(diff.getMinutes() + "")
-  seconds = padZero(diff.getSeconds() + "")
+
+  hours = Math.floor((diff % _day) / _hour);
+  minutes = Math.floor((diff % _hour) / _minute);
+  seconds = Math.floor((diff % _minute) / _second);
+
+  hours = padZero(hours)
+  minutes = padZero(minutes)
+  seconds = padZero(seconds)
   $("#Counter").countdown({
     image: "../../images/digits.png",
     startTime: "#{hours}:#{minutes}:#{seconds}"
   });
+
+scoreboardViewModel = () ->
+  model = scoreboardModel()
+  model.load()
+
+  startCountdown()
 
   # Setup a timer every 5 seconds
   setInterval model.reload, 5000

@@ -24,6 +24,23 @@ func GetFlagsForUser(uId int) ([]domains.Flag, error) {
     return flags, err
 }
 
+func GetPublicFlagsForUser(uId int) ([]domains.PublicFlag, error) {
+    publicFlags := make([]domains.PublicFlag, 0)
+    results, err := QueryRows("SELECT value FROM Users u, Flags f, UsersFlags uf WHERE u.id = uf.uId AND f.id = uf.fId AND u.publicId = ?",
+        Params(uId), rowToPublicFlag)
+
+    if err != nil {
+        return publicFlags, err
+    }
+
+    for _, result := range results {
+        flag := result.(domains.PublicFlag)
+        publicFlags = append(publicFlags, flag)
+    }
+
+    return publicFlags, err
+}
+
 // Return true if flag is validated
 func ValidateFlagFor(tag string, publicId int) (bool, error) {
 
@@ -74,6 +91,12 @@ func ValidateFlagFor(tag string, publicId int) (bool, error) {
 func rowToFlag(rows *sql.Rows) (interface{}, error) {
     flag := domains.Flag{}
     err := rows.Scan(&flag.Tag, &flag.Value)
+    return flag, err
+}
+
+func rowToPublicFlag(rows *sql.Rows) (interface{}, error) {
+    flag := domains.PublicFlag{}
+    err := rows.Scan(&flag.Value)
     return flag, err
 }
 

@@ -34,13 +34,13 @@ func getScoreboard(ctx *web.Context) string {
 
     for _, user := range users {
 
-        flags, err := db.GetFlagsForUser(user.PublicId)
+        flags, err := db.GetPublicFlagsForUser(user.PublicId)
         if err != nil {
             return constructGetResponse("scoreboard", scoreBoard, err)
         }
-        flagInfo := domains.UsersFlagInfo{}
-        flagInfo.User = user
-        flagInfo.Flags = flags
+        flagInfo := domains.UsersPublicFlagInfo{}
+        flagInfo.PublicUser = user
+        flagInfo.PublicFlags = flags
         scoreBoard.Scores = append(scoreBoard.Scores, flagInfo)
     }
 

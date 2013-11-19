@@ -36,16 +36,18 @@ func Init(path string) {
             token = strings.Trim(token, " \"")
             tokens[index] = token
         }
-        key := tokens[0]
-        value := tokens[1]
-        if key == "User" {
-            dbConfig.User = value
-        }
-        if key == "Pass" {
-            dbConfig.Pass = value
-        }
-        if key == "DBName" {
-            dbConfig.DBName = value
+        if len(tokens) == 2 {
+            key := tokens[0]
+            value := tokens[1]
+            if key == "User" {
+                dbConfig.User = value
+            }
+            if key == "Pass" {
+                dbConfig.Pass = value
+            }
+            if key == "DBName" {
+                dbConfig.DBName = value
+            }
         }
     }
 }

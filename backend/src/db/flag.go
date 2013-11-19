@@ -24,7 +24,7 @@ func GetFlagsForUser(uId int) ([]domains.Flag, error) {
     return flags, err
 }
 
-func GetPublicFlagsForUser(uId int) ([]domains.PublicFlag, error) {
+func GetPublicFlagsForUser(uId string) ([]domains.PublicFlag, error) {
     publicFlags := make([]domains.PublicFlag, 0)
     results, err := QueryRows("SELECT value FROM Users u, Flags f, UsersFlags uf WHERE u.id = uf.uId AND f.id = uf.fId AND u.publicId = ?",
         Params(uId), rowToPublicFlag)
@@ -41,7 +41,7 @@ func GetPublicFlagsForUser(uId int) ([]domains.PublicFlag, error) {
     return publicFlags, err
 }
 
-func ValidateFlagFor(tag string, publicId int) (string, error) {
+func ValidateFlagFor(tag string, publicId string) (string, error) {
 
     result, err := QueryRows("SELECT id FROM Flags WHERE tag = ?", Params(tag), rowToInt)
     if err != nil {

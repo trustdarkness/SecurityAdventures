@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS Flags;
 
 CREATE TABLE Users (
     id INT NOT NULL AUTO_INCREMENT,
-    publicId INT NOT NULL,
+    publicId VARCHAR(64) NOT NULL,
     name VARCHAR(24) NOT NULL,
     email VARCHAR(32) NOT NULL,
     PRIMARY KEY (id)

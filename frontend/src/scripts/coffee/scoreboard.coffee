@@ -83,7 +83,7 @@ scoreboardModel = ->
   m.sortUsers = -> sortUsers m
 
   m.validateFlag = (d, e) ->
-    publicId = parseInt(myRealEscapeString($("#publicId").val())) || ""
+    publicId = myRealEscapeString($("#publicId").val()) || ""
     flagHash = myRealEscapeString($("#flagHash").val()) || ""
     validateFlagWthServer publicId, flagHash, (response) ->
       if response.msg == "flag validated"

@@ -5,13 +5,13 @@ import (
 )
 
 type User struct {
-    PublicId int    `json:"public_id"`
+    PublicId string `json:"public_id"`
     Name     string `json:"name"`
     Email    string `json:"email"`
 }
 
 type PublicUser struct {
-    PublicId int `json:"public_id"`
+    PublicId string `json:"public_id"`
 }
 
 type Flag struct {
@@ -24,7 +24,7 @@ type PublicFlag struct {
 }
 
 type ValidateFlag struct {
-    PublicUserId int    `json:"public_user_id"`
+    PublicUserId string `json:"public_user_id"`
     Tag          string `json:"tag"`
 }
 

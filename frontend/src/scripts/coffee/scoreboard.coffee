@@ -102,6 +102,7 @@ scoreboardModel = ->
   m
 
 padZero = (str) ->
+  console.log str.length
   if str.length == 1
     return "0" + str
   else return str
@@ -120,9 +121,9 @@ startCountdown = ->
   minutes = Math.floor((diff % _hour) / _minute);
   seconds = Math.floor((diff % _minute) / _second);
 
-  hours = padZero(hours)
-  minutes = padZero(minutes)
-  seconds = padZero(seconds)
+  hours = padZero(hours + "")
+  minutes = padZero(minutes + "")
+  seconds = padZero(seconds + "")
   $("#Counter").countdown({
     image: "../../images/digits.png",
     startTime: "#{hours}:#{minutes}:#{seconds}"

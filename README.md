@@ -33,8 +33,8 @@
     - Create a `dbconfig.txt` file that looks something like this:
 
 ```
-User = "zeroCool"
-Pass = "crash"
+User = "AwesomeUser"
+Pass = "AwesomeUsersPassword"
 DBName = "SecurityAdventures"
 ```
 

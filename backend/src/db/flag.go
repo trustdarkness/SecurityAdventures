@@ -43,7 +43,7 @@ func GetPublicFlagsForUser(uId string) ([]domains.PublicFlag, error) {
 
 func ValidateFlagFor(tag string, publicId string) (string, error) {
 
-    result, err := QueryRows("SELECT id FROM Flags WHERE tag = ?", Params(tag), rowToInt)
+    result, err := QueryRows("SELECT id FROM Flags WHERE tag = BINARY ?", Params(tag), rowToInt)
     if err != nil {
         return "error", err
     }

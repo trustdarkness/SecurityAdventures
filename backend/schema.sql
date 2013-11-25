@@ -5,15 +5,15 @@ DROP TABLE IF EXISTS Flags;
 CREATE TABLE Users (
     id INT NOT NULL AUTO_INCREMENT,
     publicId VARCHAR(64) NOT NULL,
-    name VARCHAR(24) NOT NULL,
-    email VARCHAR(32) NOT NULL,
+    name VARCHAR(64) NOT NULL,
+    email VARCHAR(64) NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE Flags (
     id INT NOT NULL AUTO_INCREMENT,
-    host VARCHAR(32) NOT NULL,
-    tag VARCHAR(32) NOT NULL,
+    host VARCHAR(64) NOT NULL,
+    tag VARCHAR(64) NOT NULL,
     value INT NOT NULL,
     comment VARCHAR(128),
     PRIMARY KEY (id)

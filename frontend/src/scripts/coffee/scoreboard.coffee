@@ -41,12 +41,15 @@ loadModel = (model) ->
 
 reloadModel = (model) ->
   server.fetch "scoreboard", ({scoreboard: data}) ->
+    loaded = false
     for score in data.scores
       userMatch = ko.utils.arrayFirst model.users(), (item) ->
         score.public_user.public_id == item.id
       if userMatch?
-        userMatch.flags score.public_flags
-    model.sortUsers()
+        if userMatch.flags().length != score.public_flags.length
+          userMatch.flags score.public_flags
+          loaded = true
+    if loaded then model.sortUsers()
 
 userModel = (d) ->
   m =
@@ -66,7 +69,11 @@ userModel = (d) ->
 
 sortUsers = (model) ->
   model.users.sort (left, right) ->
-    left.score() < right.score()
+    if left.score() < right.score()
+      return 1
+    if right.score() < left.score()
+      return -1
+    else return 0
 
 scoreboardModel = ->
   validateFlagWthServer = (publicId, flagHash, cb) ->
@@ -102,7 +109,6 @@ scoreboardModel = ->
   m
 
 padZero = (str) ->
-  console.log str.length
   if str.length == 1
     return "0" + str
   else return str

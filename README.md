@@ -17,11 +17,12 @@
   * Install NPM
   * Install coffeescript: `npm install -g coffee-script`
   * Install LESS CSS: `npm install -g less`
-  * Run `sh frontend/compileFrontend.sh`
+  * clone this repo
+  * Run `cd SecurityAdventures/frontend && bash compileFrontend.sh`
 + Backend
   * Install Go
-  * Set GOPATH to `PATH-TO-THIS-REPO/backend`
-  * Run `sh backend/getGoDeps.sh`
+  * From the SecurityAdventures folder, run `export GOPATH=$(pwd)/backend`
+  * Run `cd backend && bash getGoDeps.sh`
   * Setup MySQL
     - `CREATE DATABASE SecurityAdventures;`
     - `CREATE USER 'USER_NAME'@'localhost' IDENTIFIED BY 'PASSWORD';`

@@ -18,7 +18,7 @@ function get_dependencies () {
 
   go get github.com/hoisie/web
   go get github.com/go-sql-driver/mysql
-  go get code.google.com/p/log4go
+  go get github.com/alecthomas/log4go
   
   echo "...finished"
 }

@@ -2,7 +2,7 @@ package db
 
 import (
     "bufio"
-    l4g "code.google.com/p/log4go"
+    l4g "github.com/alecthomas/log4go"
     "database/sql"
     "fmt"
     _ "github.com/go-sql-driver/mysql"

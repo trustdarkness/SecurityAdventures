@@ -1,7 +1,7 @@
 package db
 
 import (
-    l4g "code.google.com/p/log4go"
+    l4g "github.com/alecthomas/log4go"
     "database/sql"
     "domains"
     "fmt"
